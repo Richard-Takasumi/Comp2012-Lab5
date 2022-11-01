@@ -21,7 +21,43 @@ const char* Kid::name() const { return name_; }
 int Kid::weight() const {return weight_;}
 
 bool Kid::operator<(const Kid& other) const {  // Task 1 - To Do
+  
+  bool same_height = false;
+  bool same_gender = false;
+  bool same_name = false;
+  if (this->height() == other.height()) {
+    same_height = true;
+  }
+  if (this->gender() == other.gender()) {
+    same_gender = true;
+  }
+  if (strcmp(this->name(), other.name()) == 0) {
+    same_name = true;
+  }
+  
+  if (this->height() < other.height()) {
+    return true;
+  }
 
+  if (same_height) {
+    if (this->gender() == Female && other.gender() != Female) {
+      return true;
+    }
+  
+    if (same_gender) { 
+      if (strcmp(this->name(), other.name()) < 0) {
+        return true;
+      }
+
+      if (same_name) {
+        if (this->weight() > other.weight()) {
+          return true;
+        }
+      }
+
+    }
+  }
+  return false;
 }
 
 Kid& Kid::operator=(const Kid& other) {

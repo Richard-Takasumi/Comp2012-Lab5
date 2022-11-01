@@ -13,6 +13,42 @@ class SortedSequence{
 
     void add(const T &a) {  // Task 2 - To Do
 
+      //memory allocation phase
+      if (data_ == nullptr) {
+          data_ = new T;
+          capacity_ = 1;
+        } 
+      else if (size_ == capacity_) {
+          T* new_data_ = new T[2*capacity_];
+          for (int i = 0; i < size_; i++) {
+            // is this shallow copy?
+            new_data_[i] = data_[i];
+          }
+          // why did added the if and else instead of just doing delete[] data_ fix the code?
+          if (size_ == 1) {
+            delete data_;
+          } else {
+            delete[] data_;
+          }
+          
+          data_ = new_data_;
+          capacity_ = 2* capacity_;
+      }
+
+
+      //addition phase
+      data_[size_] = a;
+      for (int i = 0; i < size_; i++) {
+        if (a < data_[i]) {
+          for (int j = size_; j > i; j--) {
+            data_[j] = data_[j-1];
+          }
+          data_[i] = a;
+          break;
+        }
+
+      }
+      size_ += 1;
     }
 
     std::string toString() const {
